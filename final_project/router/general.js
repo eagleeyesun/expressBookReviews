@@ -6,7 +6,6 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
-const baseUrl = 'http://localhost:8080/'
 public_users.post("/register", (req, res, next) => {
   const username = req.body.username
   const password = req.body.password
@@ -22,13 +21,16 @@ public_users.post("/register", (req, res, next) => {
 })
 
 // Get the book list available in the shop
-public_users.get('/books', async function (req, res) {
-  try {
-    return res.status(300).json(books);
-  } catch (error) {
-    console.error('Error fetching Books', error.message)
-    return res.status(500).json({ Msg: "Failed to fetch books" })
-  }
+public_users.get('/', async function (req, res) {
+  await new Promise((resolve, reject) => {
+    resolve(res.send(books))
+  })
+  // try {
+  //   return res.status(300).json(books);
+  // } catch (error) {
+  //   console.error('Error fetching Books', error.message)
+  //   return res.status(500).json({ Msg: "Failed to fetch books" })
+  // }
 
 });
 
